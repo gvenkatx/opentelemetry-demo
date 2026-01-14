@@ -1,0 +1,35 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: frontend
+  namespace: astroshop
+spec:
+  to:
+    kind: Service
+    name: frontend
+  port:
+    targetPort: 8080
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: catalog
+  namespace: astroshop
+spec:
+  to:
+    kind: Service
+    name: catalog
+  port:
+    targetPort: 8080
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: cart
+  namespace: astroshop
+spec:
+  to:
+    kind: Service
+    name: cart
+  port:
+    targetPort: 8080

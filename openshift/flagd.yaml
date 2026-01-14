@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flagd
+  namespace: astroshop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flagd
+  template:
+    metadata:
+      labels:
+        app: flagd
+    spec:
+      containers:
+      - name: flagd
+        image: ghcr.io/open-telemetry/flagd:latest
+        args:
+        - start
+        - --uri
+        - file:/flags/flags.json
+        volumeMounts:
+        - name: flags
+          mountPath: /flags
+        ports:
+        - containerPort: 8013
+      volumes:
+      - name: flags
+        configMap:
+          name: flagd-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flagd-config
+  namespace: astroshop
+data:
+  flags.json: |
+    {
+      "productCatalogFailure": {
+        "state": "ENABLED",
+        "variants": {
+          "on": true,
+          "off": false
+        },
+        "defaultVariant": "off"
+      }
+    }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flagd
+  namespace: astroshop
+spec:
+  selector:
+    app: flagd
+  ports:
+  - port: 8013
