@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: currency
-        image: ghcr.io/open-telemetry/astroshop-currency:latest
+        image: ghcr.io/open-telemetry/demo:latest-currency
         ports:
         - containerPort: 8080
         env:

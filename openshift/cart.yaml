@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: cart
-        image: ghcr.io/open-telemetry/astroshop-cart:latest
+        image: ghcr.io/open-telemetry/ademo:latest-cart
         ports:
         - containerPort: 8080
         env:

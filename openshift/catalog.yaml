@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: catalog
-        image: ghcr.io/open-telemetry/astroshop-catalog:latest
+        image: ghcr.io/open-telemetry/demo:latest-product-catalog
         ports:
         - containerPort: 8080
         env:

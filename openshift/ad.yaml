@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: ad
-        image: ghcr.io/open-telemetry/astroshop-ad:latest
+        image: ghcr.io/open-telemetry/demo:latest-ad
         ports:
         - containerPort: 8080
         env:

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: flagd
-        image: ghcr.io/open-telemetry/flagd:latest
+        image: ghcr.io/open-feature/flagd:latest
         args:
         - start
         - --uri

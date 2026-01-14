@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: load-generator
-        image: ghcr.io/open-telemetry/astroshop-load-generator:latest
+        image: ghcr.io/open-telemetry/demo:latest-load-generator
         env:
         - name: FRONTEND_ADDR
           value: frontend:8080

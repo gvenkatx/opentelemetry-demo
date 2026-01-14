@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: email
-        image: ghcr.io/open-telemetry/astroshop-email:latest
+        image: ghcr.io/open-telemetry/demo:latest-email
         ports:
         - containerPort: 8080
         env:

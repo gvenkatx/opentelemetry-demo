@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: payment
-        image: ghcr.io/open-telemetry/astroshop-payment:latest
+        image: ghcr.io/open-telemetry/demo:latest-payment
         ports:
         - containerPort: 8080
         env:
