@@ -22,8 +22,8 @@ spec:
         - name: config
           mountPath: /conf
         ports:
-        - containerPort: 4318
-        - containerPort: 4317
+        - containerPort: 4318  # OTLP HTTP
+        - containerPort: 4317  # OTLP gRPC
       volumes:
       - name: config
         configMap:
@@ -39,19 +39,29 @@ data:
     receivers:
       otlp:
         protocols:
-          grpc:
-          http:
+          grpc: {}
+          http: {}
+
     processors:
       batch:
+
     exporters:
-      logging:
-        loglevel: debug
+      debug:
+        # Optional settings:
+        # verbosity: detailed  # basic|normal|detailed
+        # sampling_initial: 5
+        # sampling_thereafter: 200
+
     service:
       pipelines:
         traces:
           receivers: [otlp]
           processors: [batch]
-          exporters: [logging]
+          exporters: [debug]
+        metrics:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [debug]
 ---
 apiVersion: v1
 kind: Service
