@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: valkey-cart
+  namespace: astroshop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: valkey-cart
+  template:
+    metadata:
+      labels:
+        app: valkey-cart
+    spec:
+      containers:
+      - name: valkey-cart
+        # Valkey image (Redis API compatible)
+        image: valkey/valkey:latest
+        ports:
+        - containerPort: 6379
+        # Example memory limits — adjust as needed
+        resources:
+          limits:
+            memory: "128Mi"
+          requests:
+            memory: "64Mi"
+        # If necessary you can uncomment securityContext for OpenShift SIDs
+        # securityContext:
+        #   runAsUser: 1000
+        #   runAsNonRoot: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: valkey-cart
+  namespace: astroshop
+spec:
+  selector:
+    app: valkey-cart
+  ports:
+  - name: redis
+    port: 6379
+    targetPort: 6379

@@ -15,12 +15,14 @@ spec:
     spec:
       containers:
       - name: cart
-        image: ghcr.io/open-telemetry/demo:latest-cart
+        image: otel/demo:latest-cart
         ports:
-        - containerPort: 8080
+        - containerPort: 7070
         env:
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
           value: "http://otel-collector:4318"
+        - name: VALKEY_ADDR
+          value: "valkey-cart:6379"  # Address for Valkey cache
 ---
 apiVersion: v1
 kind: Service
@@ -31,5 +33,5 @@ spec:
   selector:
     app: cart
   ports:
-  - port: 8080
-    targetPort: 8080
+  - port: 7070
+    targetPort: 7070

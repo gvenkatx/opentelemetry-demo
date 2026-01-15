@@ -15,24 +15,47 @@ spec:
     spec:
       containers:
       - name: frontend-proxy
-        # Use the Envoy image built for the demo
-        image: ghcr.io/open-telemetry/demo:latest-frontendproxy
+        image: otel/demo:latest-frontendproxy
         ports:
         - containerPort: 8080
         env:
-        - name: OTEL_COLLECTOR_HOST
-          value: "otel-collector"        # Collector service
-        - name: OTEL_COLLECTOR_PORT
-          value: "4318"                  # Standard OTLP HTTP port
-        # Pass any additional demo proxy settings here
+        # Envoy listener (port inside container)
+        - name: ENVOY_PORT
+          value: "8080"
+
+        # The frontend UI backend
         - name: FRONTEND_HOST
           value: "frontend"
         - name: FRONTEND_PORT
           value: "8080"
+
+        # Flagd (feature flag evaluation service)
         - name: FEATURE_FLAG_SERVICE_HOST
           value: "flagd"
         - name: FEATURE_FLAG_SERVICE_PORT
           value: "8013"
+
+        # Flagd UI
+        - name: FLAGD_UI_HOST
+          value: "flagd-ui"
+        - name: FLAGD_UI_PORT
+          value: "3000"
+
+        # Load generator UI — optional but often used
+        - name: LOAD_GENERATOR_HOST
+          value: "load-generator"
+        - name: LOAD_GENERATOR_PORT
+          value: "8089"
+
+        # OpenTelemetry collector for tracing
+        - name: OTEL_COLLECTOR_HOST
+          value: "otel-collector"
+        - name: OTEL_COLLECTOR_PORT
+          value: "4318"
+
+        # Health check (optional)
+        - name: PROXY_HEALTHCHECK_PATH
+          value: "/healthz"
 ---
 apiVersion: v1
 kind: Service
